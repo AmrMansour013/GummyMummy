@@ -1,8 +1,5 @@
-PS C:\Users\amr04> C:/Users/amr04/anaconda3/Scripts/activate
-PS C:\Users\amr04> conda activate base
-PS C:\Users\amr04> & C:/Users/amr04/anaconda3/python.exe "c:/Users/amr04/Gummy Mummy/GummyMummyBackend.py"
-INFO:uvicorn:Database initialized successfully.
-INFO:     Started server process [5696]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://127.0.0.1:1000 (Press CTRL+C to quit)
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.6
+pydantic[email]==2.5.0
