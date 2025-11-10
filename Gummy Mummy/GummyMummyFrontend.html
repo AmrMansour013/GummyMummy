@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gummy Mummy — دعم ناعم للأمهات</title>
+    <link rel="icon" href="https://via.placeholder.com/32/FFD1DC/FFFFFF?text=👶" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------- CSS Styles (Unchanged) ------------------- */
+        :root {
+            --color-primary: #FFB6C1; --color-secondary: #ADD8E6; --color-text: #333; --color-muted: #6c757d;
+            --color-card: rgba(255, 255, 255, 0.95); --color-success: #5CB85C; --color-moderate: #FFC107;
+            --color-high: #DC3545; --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.1); --radius: 16px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Cairo', system-ui, sans-serif; color: var(--color-text);
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FFF7E9 45%, var(--color-secondary) 100%);
+            min-height: 100vh; display: flex; align-items: flex-start; justify-content: center;
+            padding: 40px 18px; transition: background 0.5s ease;
+        }
+        body.low-urgency { background: linear-gradient(135deg, #A8E6CF 0%, #FFF7E9 50%, #B8E0F0 100%); }
+        body.moderate-urgency { background: linear-gradient(135deg, #FFD1A6 0%, #FFF7E9 50%, #FFE0B2 100%); }
+        body.high-urgency { background: linear-gradient(135deg, #FFB3BA 0%, #FFF7E9 50%, #FFD9D9 100%); }
+        .app {
+            width: 100%; max-width: 1080px; border-radius: 24px; background: var(--color-card);
+            padding: 30px; box-shadow: var(--shadow-lg); overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; padding-bottom: 15px; }
+        .brand { display: flex; align-items: center; gap: 15px; }
+        .logo {
+            width: 50px; height: 50px; border-radius: 50%; background: var(--color-primary);
+            display: flex; align-items: center; justify-content: center; font-weight: 800;
+            color: #fff; font-size: 1.5rem; box-shadow: var(--shadow-md);
+        }
+        h1 { font-size: 1.8rem; font-weight: 800; }
+        p.lead { color: var(--color-muted); font-size: 0.9rem; margin-top: 2px; }
+        .nav-links { display: flex; gap: 15px; font-size: 0.85rem; }
+        .nav-links a { color: var(--color-muted); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--color-primary); }
+        .main-layout { display: flex; gap: 25px; position: relative; }
+        .right-sidebar { width: 280px; min-width: 280px; padding: 0; display: none; }
+        .left-content { flex: 1; padding: 0; min-height: 500px; }
+        .card {
+            background: #fff; border-radius: var(--radius); padding: 20px;
+            box-shadow: var(--shadow-md); margin-bottom: 20px;
+        }
+        label { display: block; font-weight: 600; margin: 12px 0 6px; font-size: 0.95rem; }
+        input, select {
+            width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #EEE;
+            font-size: 0.95rem; background-color: #F8F8F8; transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.4); outline: none;
+        }
+        .row { display: flex; gap: 10px; margin-top: 8px; }
+        .row .col { flex: 1; }
+        .btn {
+            display: inline-block; padding: 14px 20px; border-radius: 12px; border: none;
+            background: linear-gradient(90deg, #FF69B4, #FF8EC9); color: #fff; font-weight: 700;
+            cursor: pointer; margin-top: 15px; font-size: 1rem; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn.secondary { background: linear-gradient(90deg, #607D8B, #90A4AE); box-shadow: 0 4px 10px rgba(96, 125, 139, 0.3); }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px; margin-top: 20px;
+        }
+        .section-card {
+            background: #fdfdfd; border-radius: 12px; padding: 15px; cursor: pointer;
+            display: flex; align-items: center; gap: 12px; transition: transform .3s ease, box-shadow .3s ease;
+            border-left: 5px solid var(--color-primary);
+        }
+        .section-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); }
+        .icon {
+            width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center;
+            justify-content: center; font-size: 24px; background: rgba(255, 182, 193, 0.3);
+        }
+        .card-title { font-weight: 700; font-size: 1.1rem; }
+        .card-sub { font-size: 0.85rem; color: var(--color-muted); }
+        .register-view { width: 100%; max-width: 500px; margin: 0 auto; }
+        .app-view { position: relative; min-height: 450px; overflow: hidden; display: none; }
+        .view {
+            position: absolute; inset: 0; transform: translateX(100%); opacity: 0; visibility: hidden;
+            transition: transform 0.4s cubic-bezier(.2,.9,.3,1), opacity 0.3s; padding: 0;
+        }
+        .view.active { transform: translateX(0%); opacity: 1; visibility: visible; position: relative; }
+        .back-btn {
+            display: inline-block; margin-bottom: 20px; padding: 8px 15px; border-radius: 8px;
+            background: rgba(0, 0, 0, 0.05); cursor: pointer; font-weight: 600; color: var(--color-muted);
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: rgba(0, 0, 0, 0.1); }
+        .advice-bubble {
+            margin-top: 25px; padding: 20px; border-radius: 14px; background: #F4F7FF;
+            box-shadow: var(--shadow-md); border-right: 6px solid var(--color-primary);
+            white-space: pre-line; transition: all 0.5s ease;
+        }
+        .advice-bubble.low { border-right-color: var(--color-success); background: #E8F9E8; }
+        .advice-bubble.moderate { border-right-color: var(--color-moderate); background: #FFFBE6; }
+        .advice-bubble.high { border-right-color: var(--color-high); background: #FFE8E8; font-weight: 600; }
+        @media(max-width: 880px) {
+            .main-layout { flex-direction: column; gap: 0; }
+            .right-sidebar { order: 2; width: 100%; min-width: unset; display: block !important; }
+            .left-content { order: 1; min-height: unset; }
+            .register-view { max-width: 100%; }
+            header { flex-direction: column; gap: 10px; }
+            .nav-links { margin-top: 10px; }
+        }
+        /* ------------------- END CSS Styles ------------------- */
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <div class="brand">
+                <div class="logo">GM</div>
+                <div>
+                    <h1>Gummy Mummy</h1>
+                    <p class="lead">دعم ناعم، نصائح شخصية للأم الجديدة</p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="alert('لمحة عن رؤيتنا: دعم الأم الجديدة نفسياً وجسدياً.')">من نحن</a>
+                <a href="#">الخصوصية</a>
+                <a href="#">تواصل معنا</a>
+                <span class="muted" id="statusMessage" style="margin-right: 15px;">اوفلاين · يعمل محلياً</span>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <div class="left-content">
+                <div class="register-view" id="registerView">
+                    <div class="card">
+                        <h3 style="margin-bottom:6px">👶 ابدئي رحلة دعمك</h3>
+                        <p class="muted">املئي معلوماتك الأساسية لنقدم لك نظام نصائح شخصي. (جميع الحقول اختيارية)</p>
+
+                        <form id="registerForm">
+                            <label>الاسم</label>
+                            <input id="name" placeholder="مثال: أمل">
+
+                            <div class="row">
+                                <div class="col">
+                                    <label>العمر (الأم)</label>
+                                    <input id="age" type="number" min="15" max="60" placeholder="مثال: 29">
+                                </div>
+                                <div class="col">
+                                    <label>عمر الطفل (بالشهور)</label>
+                                    <input id="baby_age_months" type="number" min="0" placeholder="مثال: 2">
+                                </div>
+                            </div>
+                            
+                            <label>نوع الطفل</label>
+                            <select id="baby_gender">
+                                <option value="" selected>غير محدد (اختياري)</option>
+                                <option value="male">ولد</option>
+                                <option value="female">بنت</option>
+                                <option value="unknown">أخرى/غير معروف</option>
+                            </select>
+                            
+                            <label>الحالة الزوجية</label>
+                            <select id="marital_status">
+                                <option value="married" selected>متزوجة</option>
+                                <option value="single">غير متزوجة</option>
+                                <option value="divorced">مطلقة</option>
+                                <option value="widowed">أرملة</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                            
+                            <label>رقم الهاتف (اختياري)</label>
+                            <input id="phone" type="tel" placeholder="+20123...">
+
+
+                            <label>هل هذا أول طفل؟</label>
+                            <select id="is_first_child">
+                                <option value="true" selected>نعم</option>
+                                <option value="false">لا</option>
+                            </select>
+
+                            <label>هل ترضعين طبيعيًا الآن؟</label>
+                            <select id="is_breastfeeding">
+                                <option value="true" selected>نعم</option>
+                                <option value="false">لا</option>
+                            </select>
+                            
+                            <label>البريد الإلكتروني (اختياري)</label>
+                            <input id="email" type="email" placeholder="you@email.com">
+
+                            <button class="btn" type="submit">سجّل وابدأ الدعم ❤</button>
+                            <div id="registerMsg" class="muted" style="margin-top:10px; font-weight: 600;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="app-view" id="appViewsContainer" style="display: none;">
+                    
+                    <section id="view-home" class="view">
+                        <div class="card">
+                            <h3>🔍 أقسام الدعم المتخصصة</h3>
+                            <p class="muted" id="welcomeMsg">أهلاً! اختري القسم الذي تودين استشارته.</p>
+                            <div class="cards-grid" id="cardsGrid">
+                                </div>
+                        </div>
+
+                        <div id="tipBox" style="margin-top:20px; display:none;" class="card advice-bubble low">
+                            **نصيحة سريعة:** خصصي 10 دقائق للراحة عندما ينام الطفل — حتى قيلولة صغيرة ترفَع من طاقتك!
+                        </div>
+                    </section>
+
+                    </div>
+            </div>
+
+            <div class="right-sidebar" id="sidebar">
+                <div class="card">
+                    <h3>💡 لوحة التحكم</h3>
+                    <p class="muted">تنقل سريع بين الأقسام.</p>
+                    <div class="btn-group" style="margin-top:15px">
+                        <button class="btn secondary" id="btnHome" onclick="goHome()">الرئيسية/القائمة</button>
+                        <button class="btn" onclick="showAdviceSample()">نصيحة اليوم</button>
+                    </div>
+                </div>
+
+                <div class="card" id="userInfoCard">
+                    <h3>بياناتي</h3>
+                    <p class="muted">الإيميل</p>
+                    <input type="email" id="emailDisplay" disabled value="غير متوفر">
+                    <p class="muted" style="margin-top: 10px;">عمر الطفل: <span id="babyAgeDisplay" style="font-weight: 700;"></span> شهر</p>
+                    <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #EEE;">
+                        <span class="muted" style="font-size: 0.75rem;">
+                            Token: <span id="clientTokenDisplay" style="word-break: break-all;"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            © 2025 Gummy Mummy — نسخة احترافية محلية
+        </footer>
+    </div>
+
+    <script>
+        // ---------- App State & Config ----------
+        let clientProfile = null;
+        let clientToken = null;
+        // ⚠️ تم التعديل إلى المنفذ 8005 لتجنب تعارضات التشغيل الشائعة
+        const BASE_URL = 'http://127.0.0.1:1000'; 
+
+        // تعريف بيانات الأقسام (تستخدم لإنشاء الـ Forms والـ Views)
+        const cardsInfo = [
+            { id: 'mothercare', title: 'عناية الأم', desc: 'تقييم نفسي وجسدي سريع', emoji: '🌸', formId: 'form-mothercare', outId: 'out-mothercare', endpoint: 'mothercare' },
+            { id: 'sleep', title: 'نوم الطفل', desc: 'روتين ونصائح لروتين نوم أفضل', emoji: '💤', formId: 'form-sleep', outId: 'out-sleep', endpoint: 'sleep' },
+            { id: 'feeding', title: 'التغذية', desc: 'رضاعة، حليب، ومتابعة وزن', emoji: '🍼', formId: 'form-feeding', outId: 'out-feeding', endpoint: 'feeding' },
+            { id: 'hygiene', title: 'النظافة', desc: 'الحفاض، السرة والجلد', emoji: '🧼', formId: 'form-hygiene', outId: 'out-hygiene', endpoint: 'hygiene' },
+            { id: 'triage', title: 'الطوارئ', desc: 'توجيه فوري عند أعراض مقلقة', emoji: '🩺', formId: 'form-triage', outId: 'out-triage', endpoint: 'triage' },
+            { id: 'development', title: 'التطور', desc: 'مراقبة مراحل نمو الطفل', emoji: '🌱', formId: 'form-development', outId: 'out-development', endpoint: 'development' }
+        ];
+
+        // تعريف حقول النماذج لكل قسم (مطابقة للباك إند)
+        const sectionContents = {
+            'mothercare': { title: 'عناية الأم', desc: 'تقييم الحالة النفسية والجسدية.', fields: [
+                { label: 'مستوى القلق (0-10)', name: 'anxiety_level', type: 'number', min: 0, max: 10, required: true, defaultValue: 4 },
+                { label: 'مستوى الحزن (0-10)', name: 'sadness_level', type: 'number', min: 0, max: 10, required: true, defaultValue: 3 },
+                { label: 'ساعات الراحة/النوم يومياً', name: 'resting_hours', type: 'number', step: 0.1, required: true, defaultValue: 6 },
+                { label: 'هل تتناولين طعاماً جيداً؟', name: 'eating_well', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'كم مرة تحصلين على دعم (أسبوعياً)؟', name: 'support_frequency', type: 'number', min: 0, required: true, defaultValue: 1 },
+            ]},
+            'sleep': { title: 'نوم الطفل', desc: 'توصيات لروتين نوم أفضل.', fields: [
+                { label: 'إجمالي النوم خلال 24 ساعة (ساعات)', name: 'total_sleep_24h', type: 'number', step: 0.1, required: true, defaultValue: 14 },
+                { label: 'أطول فترة نوم متصلة (ساعات)', name: 'longest_sleep_block_h', type: 'number', step: 0.1, required: true, defaultValue: 4 },
+                { label: 'عدد مرات الاستيقاظ ليلاً', name: 'night_wake_ups', type: 'number', min: 0, required: true, defaultValue: 2 },
+                { label: 'هل ينام بمفرده؟', name: 'falls_asleep_alone', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+            ]},
+            'feeding': { title: 'التغذية', desc: 'نصيحة مخصصة للرضاعة/الحليب الصناعي.', fields: [
+                { label: 'نوع التغذية', name: 'feeding_type', type: 'select', options: [{ v: 'breast', t: 'رضاعة طبيعية' }, { v: 'formula', t: 'حليب صناعي' }, { v: 'mixed', t: 'مختلط' }, { v: 'solids', t: 'أطعمة صلبة' }] },
+                { label: 'عدد الرضعات يومياً', name: 'feeds_per_day', type: 'number', min: 0, required: true, defaultValue: 8 },
+                { label: 'ألم أثناء الإمساك؟ (الرضاعة الطبيعية)', name: 'pain_with_latch', type: 'select', options: [{ v: 'false', t: 'لا' }, { v: 'true', t: 'نعم' }] },
+                { label: 'كمية الحليب الصناعي (مل/يوم) - إن وُجد', name: 'formula_amount_ml_per_day', type: 'number', min: 0, defaultValue: 0 },
+                { label: 'هل تم إدخال الأطعمة الصلبة؟ (بعد 6 أشهر)', name: 'solids_introduced', type: 'select', options: [{ v: 'false', t: 'لا' }, { v: 'true', t: 'نعم' }] },
+            ]},
+            'hygiene': { title: 'النظافة', desc: 'ملاحظات سريعة حول الحفاض والاستحمام.', fields: [
+                { label: 'عدد تبديلات الحفاض يومياً', name: 'diaper_changes_per_day', type: 'number', min: 0, required: true, defaultValue: 6 },
+                { label: 'عدد الاستحمامات بالأسبوع', name: 'bath_times_per_week', type: 'number', min: 0, required: true, defaultValue: 3 },
+                { label: 'هل يوجد طفح جلدي؟', name: 'rash_present', type: 'select', options: [{ v: 'false', t: 'لا' }, { v: 'true', t: 'نعم' }] },
+                { label: 'هل هناك إفرازات من العين أو السرة؟', name: 'eye_or_umbilical_discharge', type: 'select', options: [{ v: 'false', t: 'لا' }, { v: 'true', t: 'نعم' }] },
+                { label: 'هل السرة جافة تماماً (للرضع الجدد)؟', name: 'is_umbilical_dry', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+            ]},
+            'triage': { title: 'الطوارئ / التوجيه السريع', desc: 'اختر العرض الرئيسي وسنرشدك فوراً.', fields: [
+                { label: 'الحرارة (°م)', name: 'temp_celsius', type: 'number', step: 0.1, required: false },
+                { label: 'العَرَض الرئيسي', name: 'main_symptom', type: 'select', options: [
+                    { v: 'none', t: 'لا يوجد' }, { v: 'cough', t: 'سعال' }, { v: 'diarrhea', t: 'إسهال' },
+                    { v: 'crying', t: 'بكاء مستمر' }, { v: 'vomiting', t: 'قيء' }, { v: 'fever', t: 'حمّى' }, { v: 'rash', t: 'طفح جلدي' }
+                ]},
+                { label: 'مدة الأعراض بالأيام', name: 'symptom_duration_days', type: 'number', min: 0, required: false, defaultValue: 0 },
+                { label: 'شدة الأعراض', name: 'symptom_severity', type: 'select', options: [{ v: 'mild', t: 'خفيفة' }, { v: 'moderate', t: 'متوسطة' }, { v: 'severe', t: 'شديدة' }] },
+            ]},
+            'development': { title: 'التطور والنمو', desc: 'تقييم المهارات المكتسبة.', fields: [
+                { label: 'التحكم الحركي - يلتف؟', name: 'gross_motor_rolls', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'التحكم الحركي - يزحف؟', name: 'gross_motor_crawls', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'اللغة - يخرخر/يصدُر أصوات بسيطة؟', name: 'language_babbles', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'اللغة - كلمات مفردة؟', name: 'language_single_words', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'الاجتماعي - يبتسم؟', name: 'social_smiles', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+                { label: 'الاجتماعي - تواصل بصري؟', name: 'social_eye_contact', type: 'select', options: [{ v: 'true', t: 'نعم' }, { v: 'false', t: 'لا' }] },
+            ]},
+        };
+
+
+        // ------------------------------------
+        // ---------- Initialization ----------
+        // ------------------------------------
+
+        function generateFieldHTML(field) {
+            let inputHtml = `<label>${field.label}</label>`;
+            const isSelect = field.type === 'select';
+            const isNumber = field.type === 'number';
+
+            const requiredAttr = field.required ? 'required' : ''; 
+
+            if (isSelect) {
+                inputHtml += `<select name="${field.name}" ${requiredAttr}>`;
+                field.options.forEach(opt => {
+                    inputHtml += `<option value="${opt.v}" ${opt.v === 'false' || opt.v === '' ? 'selected' : ''}>${opt.t}</option>`;
+                });
+                inputHtml += `</select>`;
+            } else {
+                inputHtml += `<input name="${field.name}" type="${field.type}" 
+                              ${requiredAttr} 
+                              ${isNumber ? 'step="' + (field.step || 1) + '"' : ''} 
+                              ${field.min !== undefined ? 'min="' + field.min + '"' : ''}
+                              value="${field.defaultValue !== undefined ? field.defaultValue : ''}"
+                              >`;
+            }
+            return inputHtml;
+        }
+
+        function createSectionViews() {
+            const appViewsContainer = document.getElementById('appViewsContainer');
+            
+            cardsInfo.forEach(c => {
+                const info = sectionContents[c.id];
+                if (!info) return;
+
+                // إنشاء الشاشات التفصيلية (الصفحات 3-8)
+                const sectionEl = document.createElement('section');
+                sectionEl.id = `view-${c.id}`;
+                sectionEl.className = 'view';
+                sectionEl.innerHTML = `
+                    <div class="card">
+                        <div class="back-btn" onclick="navigateTo('home')">← العودة للقائمة</div>
+                        <h2>${info.title}</h2>
+                        <p class="muted">${info.desc}</p>
+                        
+                        <form id="${c.formId}" style="margin-top:15px"></form>
+
+                        <div id="${c.outId}" class="advice-bubble" style="display:none"></div>
+                    </div>
+                `;
+                appViewsContainer.appendChild(sectionEl);
+
+                const form = document.getElementById(c.formId);
+                if (form) {
+                    info.fields.forEach(field => {
+                        form.innerHTML += generateFieldHTML(field);
+                    });
+                    form.innerHTML += `<button class="btn" type="submit">أرني النصيحة المخصصة</button>`;
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const payload = (c.id === 'development') ? collectDevelopmentForm(this) : collectFormAsObject(this);
+                        postSection(c.endpoint, payload, document.getElementById(c.outId));
+                    });
+                }
+            });
+            
+            // إضافة بطاقات الأقسام إلى شاشة القائمة (الصفحة 2)
+            const cardsGrid = document.getElementById('cardsGrid');
+            cardsInfo.forEach(c => {
+                const el = document.createElement('div');
+                el.className = 'section-card';
+                el.innerHTML = `<div class="icon">${c.emoji}</div>
+                                <div><div class="card-title">${c.title}</div><div class="card-sub">${c.desc}</div></div>`;
+                el.onclick = () => openSection(c.id);
+                cardsGrid.appendChild(el);
+            });
+
+            // ضبط العرض الأولي
+            document.addEventListener('DOMContentLoaded', () => manageScreens('register'));
+        }
+        document.addEventListener('DOMContentLoaded', createSectionViews);
+
+
+        // ------------------------------------
+        // ---------- Navigation Logic ----------
+        // ------------------------------------
+        
+        // يدير الانتقال بين الشاشات المنطقية الثمانية
+        function manageScreens(targetView, sectionId = null) {
+            const registerViewEl = document.getElementById('registerView');
+            const appViewsContainerEl = document.getElementById('appViewsContainer');
+            const sidebarEl = document.getElementById('sidebar');
+            const allViews = document.querySelectorAll('.view');
+            const mainHomeView = document.getElementById('view-home');
+            
+            // إخفاء كل شيء في البداية
+            registerViewEl.style.display = 'none';
+            appViewsContainerEl.style.display = 'none';
+            sidebarEl.style.display = 'none';
+            allViews.forEach(v => v.classList.remove('active'));
+
+            if (targetView === 'register') {
+                // الشاشة 1: التسجيل
+                registerViewEl.style.display = 'block';
+                document.body.className = '';
+            } else if (targetView === 'home') {
+                // الشاشة 2: القائمة الرئيسية
+                appViewsContainerEl.style.display = 'block';
+                mainHomeView.classList.add('active');
+                sidebarEl.style.display = 'block';
+                document.body.className = '';
+            } else if (targetView === 'section' && sectionId) {
+                // الشاشات 3-8: الأقسام التفصيلية
+                appViewsContainerEl.style.display = 'block';
+                sidebarEl.style.display = 'block';
+                
+                mainHomeView.classList.remove('active'); // إخفاء القائمة
+
+                const view = document.getElementById(`view-${sectionId}`);
+                if (view) {
+                    prefillView(sectionId);
+                    setTimeout(() => view.classList.add('active'), 50);
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openSection(id) {
+            if (!clientToken) {
+                alert('من فضلك سجّلي بياناتك أولاً للحصول على الدعم المخصص.');
+                return;
+            }
+            manageScreens('section', id);
+        }
+
+        function goHome() {
+            manageScreens('home');
+            document.body.className = '';
+        }
+
+        function navigateTo(page) {
+            if (page === 'home') {
+                goHome();
+            } else {
+                openSection(page);
+            }
+        }
+        
+        // ------------------------------------
+        // ---------- Utility Functions ----------
+        // ------------------------------------
+
+        function collectFormAsObject(form) {
+            const fd = new FormData(form);
+            const obj = {};
+            for (const [k, v] of fd.entries()) {
+                if (v === 'true') obj[k] = true;
+                else if (v === 'false') obj[k] = false;
+                // ⚠️ تحويل السلاسل النصية الفارغة إلى null للباك إند
+                else if (v.trim() === '') obj[k] = null; 
+                else if (!isNaN(v) && v.trim() !== '') obj[k] = (v.indexOf('.') !== -1) ? parseFloat(v) : parseInt(v);
+                else obj[k] = v;
+            }
+            // يجب أن نرسل baby_age_months حتى لو كان مكررًا أحيانا
+            if (clientProfile && clientProfile.baby_age_months) {
+                 obj.baby_age_months = clientProfile.baby_age_months;
+            }
+            return obj;
+        }
+        
+        // دالة خاصة لجمع نموذج التطور - تم إصلاحها
+        function collectDevelopmentForm(form) {
+            const fd = new FormData(form);
+            const payload = { gross_motor: {}, language: {}, social: {} };
+            
+            for (const [k, v] of fd.entries()) {
+                if (k.startsWith('gross_motor_')) {
+                    const skill = k.replace('gross_motor_', '');
+                    payload.gross_motor[skill] = v === 'true';
+                } else if (k.startsWith('language_')) {
+                    const skill = k.replace('language_', '');
+                    payload.language[skill] = v === 'true';
+                } else if (k.startsWith('social_')) {
+                    const skill = k.replace('social_', '');
+                    payload.social[skill] = v === 'true';
+                }
+            }
+            
+            if (clientProfile && clientProfile.baby_age_months) {
+                 payload.baby_age_months = clientProfile.baby_age_months;
+            }
+            return payload;
+        }
+
+        function prefillView(id) {
+            if (!clientProfile) return;
+            const formId = cardsInfo.find(c => c.id === id)?.formId;
+            if (!formId) return;
+
+            const form = document.getElementById(formId);
+            if (!form) return;
+        }
+        
+        function updateUrgencyStyle(urgency) {
+            // تحديث لون الخلفية (تفاعل الألوان)
+            document.body.className = `${urgency}-urgency`;
+            const statusMsg = document.getElementById('statusMessage');
+            if (urgency === 'high') {
+                statusMsg.innerHTML = `⚠️ <span style="color: var(--color-high); font-weight: 700;">إنذار: ${urgency}</span>`;
+            } else if (urgency === 'moderate') {
+                statusMsg.innerHTML = `🟡 <span style="color: var(--color-moderate); font-weight: 700;">مراقبة: ${urgency}</span>`;
+            } else {
+                 statusMsg.innerHTML = `🟢 <span style="color: var(--color-success); font-weight: 700;">حالة: ${urgency}</span>`;
+            }
+        }
+
+        function updateSidebarInfo() {
+            if (clientProfile) {
+                document.getElementById('emailDisplay').value = clientProfile.email || 'غير متوفر';
+                document.getElementById('babyAgeDisplay').textContent = clientProfile.baby_age_months;
+            }
+            if (clientToken) {
+                document.getElementById('clientTokenDisplay').textContent = clientToken.substring(0, 30) + '...';
+            }
+        }
+
+
+        // ------------------------------------
+        // ---------- API Calls ----------
+        // ------------------------------------
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const msg = document.getElementById('registerMsg');
+            msg.textContent = 'جاري إنشاء حسابك وتجهيز الدعم المخصص...';
+
+            // 1. جمع البيانات من النموذج
+            const payload = collectFormAsObject(form);
+            
+            // 2. قراءة القيم التي نحتاجها بشكل صريح (وخاصة الاختيارية)
+            const emailValue = document.getElementById('email').value.trim() || null;
+            const phoneValue = document.getElementById('phone').value.trim() || null; 
+            const babyGenderValue = document.getElementById('baby_gender').value || null;
+            const maritalStatusValue = document.getElementById('marital_status').value || null;
+
+            // 3. تجهيز الـ payload للتسجيل (مع إرسال جميع الحقول الإجبارية والاختيارية المرئية)
+            const registerPayload = {
+                // الحقول الأساسية الإجبارية (في الباك إند)
+                name: payload.name || null, 
+                age: payload.age || null, 
+                baby_age_months: payload.baby_age_months || null, 
+                is_first_child: payload.is_first_child || null,
+                is_breastfeeding: payload.is_breastfeeding || null,
+                
+                // الحقول الاختيارية التي أضفناها (ترسل null إذا لم يملأها المستخدم)
+                baby_gender: babyGenderValue, 
+                marital_status: maritalStatusValue, 
+                email: emailValue,
+                phone: phoneValue,
+            };
+            
+            // طباعة ما يتم إرساله للتحقق الأخير
+            console.log("Payload being sent:", registerPayload);
+
+            try {
+                const res = await fetch(`${BASE_URL}/register`, {
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }, 
+                    body: JSON.stringify(registerPayload)
+                });
+                
+                // التحقق من حالة ال response أولاً
+                if (!res.ok) {
+                    throw new Error(`خطأ في الخادم: ${res.status}`);
+                }
+                
+                const j = await res.json();
+                
+                if (j.ok) {
+                    clientProfile = registerPayload;
+                    clientToken = j.token;
+                    
+                    msg.textContent = j.message || 'تم التسجيل بنجاح! نُقلك إلى القائمة.';
+                    // نستخدم الاسم أو 'مستخدم' إذا كان الاسم فارغًا
+                    document.getElementById('welcomeMsg').textContent = `أهلاً ${clientProfile.name || 'مستخدم جديد'}، إليك أقسام الدعم.`;
+                    
+                    updateSidebarInfo();
+
+                    // الانتقال إلى الشاشة 2: القائمة
+                    setTimeout(() => manageScreens('home'), 500);
+
+                } else {
+                    // إذا كان res.ok خاطئاً، نستخدم رسالة الخادم المحددة
+                    const serverMessage = j.detail ? (j.detail[0]?.msg || JSON.stringify(j.detail)) : (j.message || 'خطأ غير معروف');
+                    msg.textContent = `تعذر التسجيل: ${serverMessage}`;
+                    console.error("Registration failed response:", j);
+                }
+            } catch (err) {
+                msg.textContent = 'تعذر الاتصال بالخادم. تأكد من تشغيل الباك إند على المنفذ 8005.';
+                console.error("Fetch/Connection Error:", err);
+            }
+        });
+
+        async function postSection(section, payload, outEl) {
+            if (!clientToken) return;
+
+            outEl.style.display = 'none';
+            outEl.textContent = 'جاري تحليل بياناتك...';
+            outEl.style.display = 'block';
+            outEl.className = 'advice-bubble';
+            updateUrgencyStyle('low');
+
+            try {
+                const res = await fetch(`${BASE_URL}/section/${section}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${clientToken}` // إرسال التوكن للأمان
+                    },
+                    body: JSON.stringify(payload)
+                });
+                const j = await res.json();
+
+                if (res.ok) {
+                    const { status, score, urgency, diagnosis, advice } = j;
+                    
+                    // تحديث تنسيق البطاقة والخلفية (تفاعل الألوان)
+                    outEl.className = `advice-bubble ${urgency}`;
+                    updateUrgencyStyle(urgency);
+
+                    outEl.innerHTML = `
+                        <strong>✅ الحالة:</strong> ${status}
+                        <br><strong>📊 الدرجة:</strong> ${score.toFixed(1)}/100
+                        <br><strong>🚦 الاستعجال:</strong> <span style="font-weight:700;">${urgency.toUpperCase()}</span>
+                        <br><strong>🧠 التشخيص:</strong> ${diagnosis || 'لا يوجد تشخيص محدد'}
+                        <hr style="opacity:.1; margin: 10px 0;">
+                        <div style="font-weight: 500; font-size: 1.05rem;">
+                            ${advice.replace(/\n/g, '<br>')}
+                        </div>
+                    `;
+                } else {
+                    outEl.className = 'advice-bubble high';
+                    updateUrgencyStyle('high');
+                    outEl.innerHTML = `
+                        <strong>❌ خطأ في المعالجة:</strong>
+                        <br>رمز الخطأ: ${res.status}
+                        <br>رسالة الخادم: ${j.message_ar || j.detail || 'تعذر معالجة الطلب.'}
+                    `;
+                }
+            } catch (err) {
+                outEl.className = 'advice-bubble high';
+                outEl.innerHTML = `
+                    <strong>❌ خطأ في الاتصال:</strong>
+                    <br>تعذر التواصل مع الخادم. تأكد من تشغيله (uvicorn) وأن التوكن سليم.
+                `;
+            }
+        }
+
+        function showAdviceSample() {
+            if (!clientProfile) {
+                alert('سجّلي بياناتك أولاً لترى نصائح مخصصة.');
+                return;
+            }
+            // يظهر النصيحة السريعة في شاشة القائمة
+            manageScreens('home');
+            document.getElementById('tipBox').className = 'card advice-bubble low';
+            document.getElementById('tipBox').innerHTML = 'نصيحة سريعة: خصصي 10 دقائق للراحة عندما ينام الطفل — حتى قيلولة صغيرة ترفَع من طاقتك!';
+            updateUrgencyStyle('low');
+        }
+    </script>
+</body>
+</html>
